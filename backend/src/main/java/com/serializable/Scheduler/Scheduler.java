@@ -19,7 +19,7 @@ public class Scheduler {
                     continue;
                 }
                 
-                bays[i] == true;
+                bays[i] = true;
                 filled = true;
                 break;
             }
@@ -28,21 +28,21 @@ public class Scheduler {
 
     public boolean checkBay(Vehicle vehicle){
         switch(vehicle.displayName){
-            case COMPACT_CAR[0]{
+            case COMPACT_CAR[0]:
                 checkBayHelper(0);
-            }
-            case MEDIUM_CAR[1]{
+                break;
+            case MEDIUM_CAR[1]:
                 checkBayHelper(1);
-            }
-            case FULL_SIZE_CAR[2]{
+                break;
+            case FULL_SIZE_CAR[2]:
                 checkBayHelper(2);
-            }
-            case TRUCK_1[3]{
+                break;
+            case TRUCK_1[3]:
                 checkBayHelper(3);
-            }
-            case TRUCK_2[4]{
+                break;
+            case TRUCK_2[4]:
                 checkBayHelper(4);
-            }
+                break;
         }
 
     }
