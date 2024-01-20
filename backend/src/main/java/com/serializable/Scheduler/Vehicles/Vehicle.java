@@ -1,21 +1,20 @@
+package com.serializable.Scheduler.Vehicles;
+
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Vehicle {
-    private final String displayName;
-    private final int serviceTime;
-    private final int serviceCharge;
-    private int numberServiced;
-    private int numberDeclined;
-    
+    private final Date requestTime;
+    private final Date serviceTime;
+    private final String type;
 
-    Vehicle(String displayName, int serviceTime, int serviceCharge) {
-        this.displayName = displayName;
+    public Vehicle(String type, Date serviceTime, Date requestTime) {
+        this.type = type;
         this.serviceTime = serviceTime;
-        this.serviceCharge = serviceCharge;
+        this.requestTime = requestTime;
     }
 }
