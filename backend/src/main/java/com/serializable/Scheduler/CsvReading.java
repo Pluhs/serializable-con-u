@@ -4,30 +4,41 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+
+import com.serializable.Scheduler.Vehicles.Vehicle;
 
 @Service
 public class CsvReading {
     private ArrayList<Vehicle> requests = new ArrayList<>();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    static String temp = "2022-09-10 07:28,2022-11-27 07:16,compact\r\n" +
-                         "2022-09-09 18:30,2022-10-15 18:07,class 2 truck\r\n" +
-                         "2022-09-18 15:20,2022-11-01 13:16,full-size\r\n" +
-                         "2022-10-20 18:30,2022-11-23 09:21,full-size";
+    @Autowired
+    private ResourceLoader resourceLoader;
             
     @EventListener(ApplicationReadyEvent.class)
     public void readCsv() {
-        String[] lines = temp.split("\r\n");
-        for (String line : lines) {
-            String[] requestAttributes = line.split(",");
-            Date requestDate = parseDate(requestAttributes[0]);
-            Date serviceDate = parseDate(requestAttributes[1]);
-            String vehicleType = requestAttributes[2];
-            Vehicle vehicle = new Vehicle(vehicleType, serviceDate, requestDate); 
-            requests.add(vehicle);
+
+        try {
+            Scanner scanner = new Scanner(resourceLoader.getResource("classpath:datafile.csv").getFile());
+            
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] requestAttributes = line.split(",");
+                Date requestDate = parseDate(requestAttributes[0]);
+                Date serviceDate = parseDate(requestAttributes[1]);
+                String vehicleType = requestAttributes[2];
+                Vehicle vehicle = new Vehicle(vehicleType, serviceDate, requestDate); 
+                requests.add(vehicle);
+            }
+        }
+        catch (Exception e) {
         }
 
         // Sort the list based on request date
@@ -48,7 +59,6 @@ public class CsvReading {
         try {
             return dateFormat.parse(dateString);
         } catch (Exception e) {
-            // Handle exception or log error
             return null;
         }
     }

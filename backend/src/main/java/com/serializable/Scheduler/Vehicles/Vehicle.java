@@ -1,29 +1,18 @@
 package com.serializable.Scheduler.Vehicles;
 
 import lombok.Data;
+import java.util.Date;
 
 @Data
 public class Vehicle {
-    private final String requestTime;
-    private final String serviceTime;
-    private final String type;
+    private final Date requestDate;
+    private final Date serviceDate;
+    private final String vehicleType;
 
-    public Vehicle(String type, String serviceTime, String requestTime) {
-        this.type = type;
-        this.serviceTime = serviceTime;
-        this.requestTime = requestTime;
-    }
-
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public Date getServiceDate() {
-        return serviceDate;
-    }
-
-    public Date getRequestDate() {
-        return requestDate;
+    public Vehicle(String vehicleType, Date serviceDate, Date requestDate) {
+        this.vehicleType = vehicleType;
+        this.serviceDate = serviceDate;
+        this.requestDate = requestDate;
     }
 
 }
