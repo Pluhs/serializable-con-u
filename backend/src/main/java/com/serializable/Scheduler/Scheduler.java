@@ -9,16 +9,12 @@ public class Scheduler {
     private CsvReading csvReading;
     private Map<String, Vehicle[][][]> schedules;
     private boolean[] sharedBays;
-    private int[] servedCustomers;
-    private int[] declinedCustomers;
     private Revenue revenue;
 
     public Scheduler(CsvReading csvReading) {
         this.csvReading = csvReading;
         this.schedules = new HashMap<>();
         this.sharedBays = new boolean[5];
-        this.servedCustomers = new int[5];
-        this.declinedCustomers = new int[5];
         this.revenue = new Revenue();
 
         for (String vehicleType : new String[]{"compact", "medium", "full-size", "class 1 truck", "class 2 truck"}) {
@@ -79,9 +75,7 @@ public class Scheduler {
             if (isSlotAvailable(schedule, date - 1, hour, serviceTime) && checkBay(vehicle)) {
                 occupySlot(schedule, date - 1, hour, vehicle, serviceTime);
                 revenue.incrementRevenue(vehicleType);
-                servedCustomers[bayIndex]++;
             } else {
-                declinedCustomers[bayIndex]++;
                 revenue.incrementRevenueLoss(vehicleType);
             }
         }
