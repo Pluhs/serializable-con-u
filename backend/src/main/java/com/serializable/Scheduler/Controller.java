@@ -14,6 +14,7 @@ public class Controller {
 
     @Autowired
     private CsvReading csvReading;
+    private Scheduler scheduler;
 
     @GetMapping("/vehicles/{type}")
     public String getVehicle(@PathVariable String type) {
@@ -23,6 +24,16 @@ public class Controller {
     @GetMapping("/vehicles")
     public List<Vehicle> getVehicles() {
         return csvReading.getRequests();
+    }
+
+    @GetMapping("/revenue")
+    public Revenue getRevenue() {
+        return scheduler.getRevenue();
+    }
+
+    @GetMapping("/processRequests")
+    public void processRequests() {
+        scheduler.processRequests();
     }
 }
 
