@@ -1,3 +1,5 @@
+package com.serializable.Scheduler;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
