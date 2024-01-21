@@ -1,0 +1,75 @@
+/* Schedule.css */
+
+.schedule-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+.schedule-container h2 {
+    color: #212529; /* A darker shade for better readability */
+    font-size: 2rem; /* Slightly larger for emphasis */
+    margin-bottom: 2rem;
+    font-weight: 600; /* Adds weight to the header */
+}
+
+/* Calendar Specific Styling */
+.react-calendar {
+    margin: 0 auto;
+    width: 100%; /* Full width within container */
+    border: none;
+    font-family: 'Arial', sans-serif;
+}
+
+.react-calendar__tile {
+    background-color: #f0f8ff; /* Lighter blue for a subtle look */
+    border-radius: 10px; /* More rounded corners */
+    padding: 0.8rem 0; /* More padding for better spacing */
+    transition: background-color 0.3s, transform 0.2s; /* Smoother transition */
+}
+
+/* Selected Date Styling */
+.react-calendar__tile--active,
+.react-calendar__tile--active:enabled {
+    background-color: #007bff; /* Background color for selected date */
+    color: white; /* Text color for selected date */
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background-color: #0056b3; /* Slightly darker background color on hover */
+}
+
+.time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.time-slots button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.time-slots button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+.time-slots p {
+    text-align: center;
+    color: #212529; /* Consistent text color */
+    font-size: 1rem;
+}

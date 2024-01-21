@@ -1,0 +1,53 @@
+/* Header.css */
+
+.header {
+    background-color: #0c1e3e; /* Dark blue */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 50px; /* Adjust as needed */
+}
+
+.garage-name {
+    margin-left: 10px;
+    font-size: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.navigation-menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation-menu ul li {
+    margin-left: 20px;
+}
+
+.navigation-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+}
+
+.navigation-menu ul li a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .navigation-menu ul {
+        display: none;
+    }
+    /* Add styles for a hamburger menu icon */
+}
