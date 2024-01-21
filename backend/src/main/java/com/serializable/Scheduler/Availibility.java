@@ -9,5 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Availibility {
     private Availibility[] bookingSlots;
-    private boolean[] bays;  
+    private boolean[] bays;
+
+    
 }
