@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CsvReading {
     private ArrayList<Vehicle> requests = new ArrayList<>();
-    // private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
@@ -53,7 +52,6 @@ public class CsvReading {
         return requests;
     }
 
-    // Utility method to parse date strings
     private LocalDateTime parseDate(String dateString) {
         try {
             return LocalDateTime.parse(dateString, dateFormatter);

@@ -3,16 +3,8 @@ import lombok.Data;
 
 @Data
 public class Revenue {
-    private int numOfCompact;
-    private int numOfMedium;
-    private int numOfFull;
-    private int numOfTruck1;
-    private int numOfTruck2;
-    private int numOfCompactTA;
-    private int numOfMediumTA;
-    private int numOfFullTA;
-    private int numOfTruck1TA;
-    private int numOfTruck2TA;
+    private int[] numOfEach = new int[5];
+    private int[] numOfEachTA = new int[5];
     private int totalRevenueWinnings;
     private int totalRevenueLoss;
 
@@ -25,23 +17,23 @@ public class Revenue {
     public void incrementRevenue(String typeOfVehicle) {
         switch (typeOfVehicle) {
             case "compact":
-                numOfCompact++;
+                numOfEach[0]++;
                 totalRevenueWinnings += CHARGE_COMPACT;
                 break;
             case "medium":
-                numOfMedium++;
+                numOfEach[1]++;
                 totalRevenueWinnings += CHARGE_MEDIUM;
                 break;
             case "full-size":
-                numOfFull++;
+                numOfEach[2]++;
                 totalRevenueWinnings += CHARGE_FULL;
                 break;
             case "class 1 truck":
-                numOfTruck1++;
+                numOfEach[3]++;
                 totalRevenueWinnings += CHARGE_TRUCK1;
                 break;
             case "class 2 truck":
-                numOfTruck2++;
+                numOfEach[4]++;
                 totalRevenueWinnings += CHARGE_TRUCK2;
                 break;
         }
@@ -50,23 +42,23 @@ public class Revenue {
     public void incrementRevenueLoss(String typeOfVehicle) {
         switch (typeOfVehicle) {
             case "compact":
-                numOfCompactTA++;
+                numOfEachTA[0]++;
                 totalRevenueLoss += CHARGE_COMPACT;
                 break;
             case "medium":
-                numOfMediumTA++;  
+                numOfEachTA[1]++;  
                 totalRevenueLoss += CHARGE_MEDIUM;
                 break;
             case "full-size":
-                numOfFullTA++;
+                numOfEachTA[2]++;
                 totalRevenueLoss += CHARGE_FULL;
                 break;
             case "class 1 truck":
-                numOfTruck1TA++;
+                numOfEachTA[3]++;
                 totalRevenueLoss += CHARGE_TRUCK1;
                 break;
             case "class 2 truck":
-                numOfTruck2TA++;
+                numOfEachTA[4]++;
                 totalRevenueLoss += CHARGE_TRUCK2;
                 break;
         }
