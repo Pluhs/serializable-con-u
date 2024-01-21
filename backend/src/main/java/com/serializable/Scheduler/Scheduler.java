@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Scheduler {
-    private Availibility[] bookingSlots;
+    private Availibility[] bookingSlots = new Vehicle[2][31][24][10];;
     private boolean[] bays;
     private boolean filled;
 
@@ -45,8 +45,7 @@ public class Scheduler {
         }
 
     }
-    private Vehicle[][][] bookingSlots = new Vehicle[2][31][24][10];
-    private boolean[] bays;
+    
 
     @Autowrired 
     private CsvReading csvReading;
