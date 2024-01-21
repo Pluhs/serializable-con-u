@@ -4,15 +4,19 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 public class Scheduler {
 
+    @Autowired
     private CsvReading csvReading;
+
     private Map<String, Vehicle[][][]> schedules;
     private boolean[] sharedBays;
     private Revenue revenue;
 
     public Scheduler(CsvReading csvReading) {
-        this.csvReading = csvReading;
         this.schedules = new HashMap<>();
         this.sharedBays = new boolean[5];
         this.revenue = new Revenue();
@@ -24,56 +28,52 @@ public class Scheduler {
 
     private boolean checkBay(Vehicle vehicle) {
         String vehicleType = vehicle.getVehicleType();
-        int bayIndex = getBayIndex(vehicleType);
-
-        if (!sharedBays[bayIndex]) {
-            sharedBays[bayIndex] = true;
-            return true;
+        for(int i = 0; i < 5; i++){
+            if (!sharedBays[i]) {
+                sharedBays[i] = true;
+                break;
+            }
         }
-
-        return false;
+        return true;
     }
 
-    private int getBayIndex(String vehicleType) {
-        switch (vehicleType) {
-            case "compact":
-                return 0;
-            case "medium":
-                return 1;
-            case "full-size":
-                return 2;
-            case "class 1 truck":
-                return 3;
-            case "class 2 truck":
-                return 4;
-            default:
-                return -1;
+    private void resetSharedBays() {
+        sharedBays = new boolean[5];
+    }
+    private void resetSchedules() {
+        schedules = new HashMap<>();
+        for (String vehicleType : new String[]{"compact", "medium", "full-size", "class 1 truck", "class 2 truck"}) {
+            schedules.put(vehicleType, new Vehicle[61][24][1]);
         }
     }
 
     public void processRequests() {
+        resetSharedBays();
+        resetSchedules();
         List<Vehicle> vehicles = csvReading.getRequests();
 
         for (Vehicle vehicle : vehicles) {
-            LocalDateTime serviceDate = vehicle.getServiceDate();
             LocalDateTime requestDate = vehicle.getRequestDate();
 
-            int date = serviceDate.getDayOfMonth();
+            int month = requestDate.getMonthValue();
+            int day = requestDate.getDayOfMonth();
             int hour = requestDate.getHour();
+            int minute = requestDate.getMinute();
 
-            if (date < 1 || date > 61 || hour < 7 || hour >= 19) {
-                continue;
+            if (month == 11){
+                day += 31;
             }
 
+            int timeSlot = (hour - 6) * 2 + (minute == 30 ? 1 : 0);
+
             String vehicleType = vehicle.getVehicleType();
-            int bayIndex = getBayIndex(vehicleType);
 
             Vehicle[][][] schedule = schedules.get(vehicleType);
 
             int serviceTime = getServiceTime(vehicleType);
 
-            if (isSlotAvailable(schedule, date - 1, hour, serviceTime) && checkBay(vehicle)) {
-                occupySlot(schedule, date - 1, hour, vehicle, serviceTime);
+            if (isSlotAvailable(schedule, day - 1, timeSlot, serviceTime) || checkBay(vehicle)) {
+                occupySlot(schedule, day - 1, timeSlot, vehicle, serviceTime);
                 revenue.incrementRevenue(vehicleType);
             } else {
                 revenue.incrementRevenueLoss(vehicleType);
@@ -81,18 +81,18 @@ public class Scheduler {
         }
     }
 
-    private boolean isSlotAvailable(Vehicle[][][] schedule, int dateIndex, int hourIndex, int serviceTime) {
-        for (int i = hourIndex; i < hourIndex + serviceTime; i++) {
-            if (schedule[dateIndex][i][0] != null) {
+    private boolean isSlotAvailable(Vehicle[][][] schedule, int day, int timeSlot, int serviceTime) {
+        for (int i = timeSlot; i < timeSlot + serviceTime; i++) {
+            if (schedule[day][i][0] != null) {
                 return false;
             }
         }
         return true;
     }
 
-    private void occupySlot(Vehicle[][][] schedule, int dateIndex, int hourIndex, Vehicle vehicle, int serviceTime) {
-        for (int i = hourIndex; i < hourIndex + serviceTime; i++) {
-            schedule[dateIndex][i][0] = vehicle;
+    private void occupySlot(Vehicle[][][] schedule, int day, int timeSlot, Vehicle vehicle, int serviceTime) {
+        for (int i = timeSlot; i < timeSlot + serviceTime; i++) {
+            schedule[day][i][0] = vehicle;
         }
     }
 
