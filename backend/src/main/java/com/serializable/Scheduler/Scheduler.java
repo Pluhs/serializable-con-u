@@ -26,8 +26,7 @@ public class Scheduler {
         }
     }
 
-    private boolean checkBay(Vehicle vehicle) {
-        String vehicleType = vehicle.getVehicleType();
+    private boolean checkSharedBays(Vehicle vehicle) {
         for(int i = 0; i < 5; i++){
             if (!sharedBays[i]) {
                 sharedBays[i] = true;
@@ -72,7 +71,7 @@ public class Scheduler {
 
             int serviceTime = getServiceTime(vehicleType);
 
-            if (isSlotAvailable(schedule, day - 1, timeSlot, serviceTime) || checkBay(vehicle)) {
+            if (isSlotAvailable(schedule, day - 1, timeSlot, serviceTime) || checkSharedBays(vehicle)) {
                 occupySlot(schedule, day - 1, timeSlot, vehicle, serviceTime);
                 revenue.incrementRevenue(vehicleType);
             } else {
